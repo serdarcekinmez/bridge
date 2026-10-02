@@ -1,1 +1,0 @@
-tail -f "$(ls -t ~/.claude/projects/*Car*Sales*V2*/*.jsonl | head -1)" | jq -r --unbuffered 'select(.type=="assistant") | .message.content[]? | if .type=="text" then "Claude: " + .text[0:200] elif .type=="tool_use" then "-> " + .name + " " + ((.input.file_path // .input.command // .input.pattern // "") | tostring) else empty end'
